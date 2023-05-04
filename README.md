@@ -60,11 +60,9 @@
           - [x] DNS interne
           - [x] Gateway par défaut
       - [x] VLAN 200
-        - [ ] Référencement
-          - [ ] DNS interne
-          - [x] Gateway par défaut
+        - [x] Gateway par défaut
 - [ ] Sites délocalisés
-  - [ ] Accès DMZ
+  - [x] Accès DMZ
   - [ ] Accès Internet
   - [ ] VPN: Accès réseau interne
 - [ ] Internet

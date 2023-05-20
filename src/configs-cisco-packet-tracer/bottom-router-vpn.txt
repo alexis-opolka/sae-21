@@ -29,21 +29,11 @@ crypto isakmp policy 10
  authentication pre-share
  group 5
 !
-crypto isakmp policy 22
- encr aes
- authentication pre-share
- group 5
-!
-crypto isakmp key TBPVPN address 200.0.255.200
+crypto isakmp key TBPPVPN address 200.0.255.200
 !
 !
 !
 crypto ipsec transform-set CRYPSET esp-aes esp-sha-hmac
-!
-crypto map VPNMAP 22 ipsec-isakmp 
- set peer 200.0.255.200
- set transform-set CRYPSET 
- match address VPN
 !
 !
 crypto map TBPMAP 10 ipsec-isakmp 
@@ -65,21 +55,20 @@ spanning-tree mode pvst
 !
 !
 interface GigabitEthernet0/0
- ip address 10.202.202.201 255.255.255.252
- ip nat outside
- duplex auto
- speed auto
- crypto map VPNMAP
-!
-interface GigabitEthernet0/1
  no ip address
  duplex auto
  speed auto
  shutdown
+!
+interface GigabitEthernet0/1
+ ip address 10.202.201.201 255.255.255.252
+ ip nat outside
+ duplex auto
+ speed auto
  crypto map TBPMAP
 !
 interface GigabitEthernet0/0/0
- ip address 192.168.1.254 255.255.255.0
+ ip address 192.168.2.254 255.255.255.0
  ip nat inside
 !
 interface Vlan1
@@ -99,11 +88,10 @@ ip flow-export version 9
 !
 !
 ip access-list extended VPN
- permit ip 192.168.1.0 0.0.0.255 192.168.200.0 0.0.0.255
-access-list 10 permit 192.168.1.0 0.0.0.255
+ permit ip 192.168.2.0 0.0.0.255 192.168.200.0 0.0.0.255
 ip access-list extended LAN
- deny ip 192.168.1.0 0.0.0.255 192.168.200.0 0.0.0.255
- permit ip 192.168.1.0 0.0.0.255 any
+ deny ip 192.168.2.0 0.0.0.255 192.168.200.0 0.0.0.255
+ permit ip 192.168.2.0 0.0.0.255 any
 !
 !
 !
@@ -119,4 +107,3 @@ line vty 0 4
 !
 !
 end
-

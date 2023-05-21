@@ -44,22 +44,12 @@ crypto isakmp policy 10
  authentication pre-share
  group 5
 !
-crypto isakmp policy 22
- encr aes
- authentication pre-share
- group 5
-!
 crypto isakmp key TBPPVPN address 10.202.201.201
 crypto isakmp key TBPVPN address 10.202.202.201
 !
 !
 !
 crypto ipsec transform-set CRYPSET esp-aes esp-sha-hmac
-!
-crypto map VPNMAP 22 ipsec-isakmp 
- set peer 10.202.202.201
- set transform-set CRYPSET 
- match address VPN
 !
 !
 crypto map TBPMAP 10 ipsec-isakmp 
@@ -76,8 +66,6 @@ crypto map TBPMAP 20 ipsec-isakmp
 !
 !
 no ip domain-lookup
-ip host beta.the-banzaii-project.fr 192.168.200.200 
-ip name-server 200.0.200.53
 !
 !
 spanning-tree mode pvst

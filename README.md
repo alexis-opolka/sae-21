@@ -105,7 +105,7 @@ Pour les réseaux et les VLANs, j'ai choisi de faire des démarcations bien dist
 | Dénomination de l'élément |    Réf./ID    |                    Avantages                     |                             Inconvénients                             |                                                                   Raison du choix                                                                   |
 | :-----------------------: | :-----------: | :----------------------------------------------: | :-------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------: |
 |          Switch           |   Switch-PT   |   Permet jusqu'à 10 connexions Fibres/Cuivres    | Est un modèle générique, ne permet pas de se projeter dans la réalité |                                       Il permet de faire beaucoup de connexions, notamment en fibre optique.                                        |
-|          Routeur          |  Cisco 2901   |          Permet de faire du NAT/BGP/VPN          |              N'est pas un routeur de dernière génération              | Il permet de faire, en particulier, une connexion VPN, pour plus d'informations, se référer à la section [creation d'un VPN](#configuration-du-vpn) |
+|          Routeur          |  Cisco 2901   |          Permet de faire du NAT/BGP/VPN          |              N'est pas un routeur de dernière génération              | Il permet de faire, en particulier, une connexion VPN, pour plus d'informations, se référer à la section [création d'un VPN](#configuration-du-vpn) |
 |          Routeur          |  Cisco 1841   |        Requis dans le cahier des charges         |                   Requis dans le cahier des charges                   |                                                          Requis dans le cahier des charges                                                          |
 |          Routeur          |  Cisco 2811   |        Requis dans le cahier des charges         |                   Requis dans le cahier des charges                   |                                                          Requis dans le cahier des charges                                                          |
 |       Lien physique       | Fibre Optique | Permet de faire des connexions à très haut débit |                 Nécessite des équipements spécifiques                 |                                   Se référer à la section [Choix des liens physiques](#choix-des-liens-physiques)                                   |
@@ -142,7 +142,7 @@ J'ai donc trouvé plus naturel et logique d'utiliser du BGP pour le routage dyna
 Pour la sécurité, j'ai utilisé plusieurs méthodes, les ACLs et la sécurité par design.
 
 C'est à dire que pour les VLANs, j'ai utilisé des ACLs pour empêcher expressément
-certaines connexions de s'effectuer entre les différents VLANs et/ou des sortir.
+certaines connexions de s'effectuer entre les différents VLANs et/ou des sorties.
 
 Mais par exemple, pour la DMZ et l'ordinateur technique de la DMZ, j'ai utilisé
 la sécurité par design, c'est à dire que j'ai mis en place un réseau avec un
@@ -150,7 +150,7 @@ masque de sous-réseau plus grand que nécessaire, ce qui me permet de jouer
 avec les différents octets de l'adresse en fonction de si c'est un serveur
 ou un routeur.  
 Ensuite, je configure l'adresse IP de l'ordinateur technique avec un
-masque de sous-réseau plus petit lui permettant d'accéder aux serveurs
+masque de sous-réseau plus grand lui permettant d'accéder aux serveurs
 mais pas aux routeurs, ne lui permettant pas de sortir du réseau.
 
 ### Spécificités du Routage BGP
@@ -493,6 +493,14 @@ ip nat inside source list VLAN interface GigabitEthernet0/1/0 overload
 ```
 
 ##### Configuration du VPN
+
+> **Note**:  
+> De par les instructions données comme quoi il était nécessaire
+> d'avoir un VPN fonctionnel mais qu'il n'était pas obligatoire
+> de l'avoir sur les deux sites distants, j'ai décidé de ne pas
+> le mettre en place sur le site distant n°2, me donnant ainsi
+> la possibilité de démontrer facilement les connexions avec
+> un VPN fonctionnel et sans VPN.
 
 Tout d'abord, j'ai du changer le routeur interne/DMZ par un routeur
 Cisco 2901, car le routeur Cisco 2811 qui était imposé dans le cahier
